@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gray-50 font-['Inter']">
+    <div class="min-h-screen">
+        <!-- Navigation -->
+        <nav class="bg-blue-600 text-white p-4">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-xl font-bold">CRM Dashboard</h1>
+                <div class="flex gap-4">
+                    <button id="notificationBtn" class="relative">
+                        <i class="bi bi-bell text-xl"></i>
+                        <span id="notificationCount" class="absolute -top-2 -right-2 bg-red-500 text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="container mx-auto p-4">
+            <!-- Dashboard Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="text-gray-500">Total Leads</h3>
+                    <p id="totalLeads" class="text-2xl font-bold">0</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="text-gray-500">In Progress</h3>
+                    <p id="inProgressLeads" class="text-2xl font-bold text-blue-600">0</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="text-gray-500">Converted</h3>
+                    <p id="convertedLeads" class="text-2xl font-bold text-green-600">0</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="text-gray-500">Lost</h3>
+                    <p id="lostLeads" class="text-2xl font-bold text-red-600">0</p>
+                </div>
+            </div>
+
+            <!-- Lead Entry Form -->
+            <div class="bg-white p-6 rounded-lg shadow mb-6">
+                <h2 class="text-xl font-bold mb-4">New Lead Entry</h2>
+                <form id="leadForm" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Serial Number</label>
+                        <input type="number" id="serialNumber" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" readonly>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Lead Date</label>
+                        <input type="date" id="leadDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Name</label>
+                        <input type="text" id="name" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Company</label>
+                        <input type="text" id="company" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Phone</label>
+                        <input type="tel" id="phone" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" id="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Source</label>
+                        <select id="source" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                            <option value="">Select Source</option>
+                            <option value="EMAIL">EMAIL</option>
+                            <option value="INDIAMART">INDIAMART</option>
+                            <option value="CALL">CALL</option>
+                            <option value="WHATS APP">WHATS APP</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Product</label>
+                        <select id="product" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                            <option value="">Select Product</option>
+                            <option value="LED TRAFFIC SIGNAL">LED TRAFFIC SIGNAL</option>
+                            <option value="BLINKER">BLINKER</option>
+                            <option value="SOLAR BLINKER">SOLAR BLINKER</option>
+                            <option value="RADAR SPEED DISPLAY">RADAR SPEED DISPLAY</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Quantity</label>
+                        <input type="number" id="quantity" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Action</label>
+                        <select id="action" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" required>
+                            <option value="">Select Action</option>
+                            <option value="CALLED/SPOKE">CALLED/SPOKE</option>
+                            <option value="SENT CATALOG VIA EMAIL">SENT CATALOG VIA EMAIL</option>
+                            <option value="SENT CATALOG VIA WHATS APP">SENT CATALOG VIA WHATS APP</option>
+                            <option value="SENT QUOTATION VIA EMAIL">SENT QUOTATION VIA EMAIL</option>
+                            <option value="SENT QUOTATION VIA WHATS APP">SENT QUOTATION VIA WHATS APP</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Quotation Number</label>
+                        <input type="text" id="quotationNumber" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Follow-Up Date</label>
+                        <input type="date" id="followUpDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" readonly>
+                    </div>
+                    <div class="md:col-span-2 lg:col-span-3">
+                        <label class="block text-sm font-medium text-gray-700">Notes</label>
+                        <textarea id="notes" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"></textarea>
+                    </div>
+                    <div class="md:col-span-2 lg:col-span-3">
+                        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">Save Lead</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Leads Table -->
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-bold mb-4">Leads Management</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Serial No</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Company</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leadsTableBody" class="bg-white divide-y divide-gray-200">
+                            <!-- Leads will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize lead data storage
+        let leads = JSON.parse(localStorage.getItem('leads')) || [];
+        let currentSerialNumber = leads.length > 0 ? Math.max(...leads.map(lead => lead.serialNumber)) + 1 : 1;
+
+        // Initialize the form
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('serialNumber').value = currentSerialNumber;
+            document.getElementById('leadDate').valueAsDate = new Date();
+            updateDashboardStats();
+            renderLeadsTable();
+            checkForDueFollowUps();
+        });
+
+        // Form submission handler
+        document.getElementById('leadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                serialNumber: currentSerialNumber,
+                leadDate: document.getElementById('leadDate').value,
+                name: document.getElementById('name').value,
+                company: document.getElementById('company').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                source: document.getElementById('source').value,
+                product: document.getElementById('product').value,
+                quantity: document.getElementById('quantity').value,
+                action: document.getElementById('action').value,
+                quotationNumber: document.getElementById('quotationNumber').value,
+                followUpDate: calculateFollowUpDate(document.getElementById('leadDate').value),
+                notes: document.getElementById('notes').value,
+                status: 'In Progress',
+                activities: [{
+                    date: new Date().toISOString(),
+                    action: document.getElementById('action').value,
+                    notes: document.getElementById('notes').value
+                }]
+            };
+
+            leads.push(formData);
+            localStorage.setItem('leads', JSON.stringify(leads));
+            currentSerialNumber++;
+            
+            // Reset form and update UI
+            this.reset();
+            document.getElementById('serialNumber').value = currentSerialNumber;
+            document.getElementById('leadDate').valueAsDate = new Date();
+            updateDashboardStats();
+            renderLeadsTable();
+            checkForDueFollowUps();
+        });
+
+        // Calculate follow-up date (2 days from given date)
+        function calculateFollowUpDate(date) {
+            const followUp = new Date(date);
+            followUp.setDate(followUp.getDate() + 2);
+            return followUp.toISOString().split('T')[0];
+        }
+
+        // Update dashboard statistics
+        function updateDashboardStats() {
+            document.getElementById('totalLeads').textContent = leads.length;
+            document.getElementById('inProgressLeads').textContent = leads.filter(lead => lead.status === 'In Progress').length;
+            document.getElementById('convertedLeads').textContent = leads.filter(lead => lead.status === 'Converted').length;
+            document.getElementById('lostLeads').textContent = leads.filter(lead => lead.status === 'Lost').length;
+        }
+
+        // Render leads table
+        function renderLeadsTable() {
+            const tbody = document.getElementById('leadsTableBody');
+            tbody.innerHTML = '';
+
+            leads.forEach(lead => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="px-6 py-4 whitespace-nowrap">${lead.serialNumber}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${new Date(lead.leadDate).toLocaleDateString()}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${lead.name}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${lead.company}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">${lead.product}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
+                            ${lead.status === 'Converted' ? 'bg-green-100 text-green-800' : 
+                            lead.status === 'Lost' ? 'bg-red-100 text-red-800' : 
+                            'bg-blue-100 text-blue-800'}">
+                            ${lead.status}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <button onclick="updateLeadStatus(${lead.serialNumber}, 'Converted')" class="text-green-600 hover:text-green-900 mr-2">
+                            <i class="bi bi-check-circle"></i>
+                        </button>
+                        <button onclick="updateLeadStatus(${lead.serialNumber}, 'Lost')" class="text-red-600 hover:text-red-900 mr-2">
+                            <i class="bi bi-x-circle"></i>
+                        </button>
+                        <button onclick="addActivity(${lead.serialNumber})" class="text-blue-600 hover:text-blue-900">
+                            <i class="bi bi-plus-circle"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Update lead status
+        function updateLeadStatus(serialNumber, status) {
+            const leadIndex = leads.findIndex(lead => lead.serialNumber === serialNumber);
+            if (leadIndex !== -1) {
+                leads[leadIndex].status = status;
+                localStorage.setItem('leads', JSON.stringify(leads));
+                updateDashboardStats();
+                renderLeadsTable();
+                checkForDueFollowUps();
+            }
+        }
+
+        // Add new activity to a lead
+        function addActivity(serialNumber) {
+            const leadIndex = leads.findIndex(lead => lead.serialNumber === serialNumber);
+            if (leadIndex !== -1) {
+                const action = prompt('Enter activity action:');
+                const notes = prompt('Enter activity notes:');
+                
+                if (action) {
+                    leads[leadIndex].activities.push({
+                        date: new Date().toISOString(),
+                        action: action,
+                        notes: notes || ''
+                    });
+                    leads[leadIndex].followUpDate = calculateFollowUpDate(new Date().toISOString());
+                    localStorage.setItem('leads', JSON.stringify(leads));
+                    renderLeadsTable();
+                    checkForDueFollowUps();
+                }
+            }
+        }
+
+        // Check for due follow-ups
+        function checkForDueFollowUps() {
+            const today = new Date().toISOString().split('T')[0];
+            const dueLeads = leads.filter(lead => 
+                lead.status === 'In Progress' && 
+                lead.followUpDate <= today
+            );
+
+            const notificationCount = document.getElementById('notificationCount');
+            notificationCount.textContent = dueLeads.length;
+            
+            // Show notification when clicked
+            document.getElementById('notificationBtn').onclick = function() {
+                if (dueLeads.length > 0) {
+                    alert(`You have ${dueLeads.length} leads due for follow-up today:\n\n${
+                        dueLeads.map(lead => `${lead.name} (${lead.company})`).join('\n')
+                    }`);
+                } else {
+                    alert('No follow-ups due today!');
+                }
+            };
+        }
+
+        // Check for follow-ups every hour
+        setInterval(checkForDueFollowUps, 3600000);
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
